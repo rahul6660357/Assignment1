@@ -1,2 +1,166 @@
-﻿
+﻿@{
+    Layout = null;
+}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Shopping Cart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <environment include="Development,Production">
+        <link rel="stylesheet" href="~/vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/font-awesome.min.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <style>
+            body {
+                background: #925C54;
+                height: 100vh;
+                background-size: 40% auto;
+            }
+
+            .btn-primary {
+                color: #fff;
+                background-color: #492728 !important;
+                border-color: #492728;
+            }
+
+                .btn-primary:hover {
+                    color: #fff;
+                    background-color: #925C54 !important;
+                    border-color: #925C54;
+                }
+
+            .form-control {
+                min-height: 38px;
+                padding-left: 5px;
+                box-shadow: none !important;
+                border-width: 0 0 1px 0;
+                border-radius: 0;
+            }
+
+            .input-group-addon {
+                max-width: 42px;
+                text-align: center;
+                background: none;
+                border-width: 0 0 1px 0;
+                padding-right: 22px;
+                border-radius: 0;
+                padding-top: 6px;
+            }
+
+            .customModel {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0,0,0,.8);
+                z-index: 1024;
+            }
+
+                .customModel .loader {
+                    position: absolute;
+                    width: 17rem;
+                    height: 10rem;
+                    left: 50%;
+                    top: 50%;
+                    color: white;
+                    font-size: 40px
+                }
+        </style>
+    </environment>
+</head>
+<body>
+    <div class="container h-100">
+        <div class="customModel" id="updatedata" style="display:none">
+            <div class="loader"><i class="fa fa-spinner fa-spin"></i></div>
+        </div>
+        <div class="row h-100">
+            <div class="col-md-5 ml-auto mt-auto mb-auto">
+                <div class="card card-signin my-5" style="height:500px;">
+                    <div class="mx-auto mt-5" style="width:100px">
+                        <span> <img src="~/Images/login.png" alt="Logo"> </span>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mt-5">
+                            <div id="ErrormessagePanel" class="alert alert-info" style="display:none"></div>
+                            <div id="sucessmessagePanel" class="alert alert-success" style="display:none"></div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input id="email" type="text" class="form-control" name="Email" placeholder="Email" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                <input id="password" type="password" class="form-control" name="password" placeholder="Password" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group mt-5">
+                            <button onclick="validate()" type="submit" class="btn btn-primary btn-block btn-lg">Sign In</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <environment include="Development,Production">
+        <!--===============================================================================================-->
+        <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/bootstrap/js/popper.js"></script>
+        <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/select2/select2.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+    </environment>
+</body>
+</html>
+
+<script src="~/Applicationjs/GlobalAjaxRequest.js" asp-append-version="true"></script>
+
+<script>
+  var Authencationurl = '@Url.Content("~/api/account/userauthencation")';
+  var homePageurl = '@Url.Action("Index","DataInput")';
+  function validate(){
+    var email = $("#email").val();
+      var password = $("#password").val();
+      var model = { Email: email, Password: password}
+      AjaxRequest(Authencationurl, 'post', model, '', successcallback, failurecallback)
+  }
+    function successcallback() {
+
+    }
+    function failurecallback() {
+
+    }
+    function AjaxRequest(url, reqtype, data, token, successcallback, failurecallback) {
+        console.log(data);
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: data,
+          
+            dataType: 'application/json',
+            contentType: 'application/x-www-form-urlencoded',
+            success: successcallback,
+            error: failurecallback
+        });
+    }
+     $('#email,#password').keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                validate();
+            }
+            event.stopPropagation();
+        });
+</script>

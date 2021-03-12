@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+@{
+    var claims = User.Claims.ToList();
+   
+    string controllername = this.ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    string actionname = this.ViewContext.RouteData.Values["action"].ToString().ToLower();
+    
+}
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        .table-light tbody + tbody, .table-light td, .table-light th, .table-light thead th {
+            border-color: #dee2e6 !important;
+        }
+
+        .card-static .card-header {
+            background-color: #5e86c3 !important;
+        }
+
+        .card-static .card-body {
+            font-size: 12px;
+        }
+    </style>
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="shortcut icon" href="~/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <environment include="Development,Production">
+        <link rel="stylesheet" href="~/vendor/bootstrap/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="~/css/font-awesome.min.css">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="~/css/main.css">
+        <link rel="stylesheet" href="~/css/header.css">
+        <link rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/responsive.dataTables.min.css" />
+        <link rel="stylesheet" type="text/css" href="~/css/jquery-ui.css" />
+        <link href="~/css/simplePagination.css" rel="stylesheet" />
+
+    </environment>
+</head>
+<body>
+    <header>
+        <div class="customModel" id="updatedata" style="display:none">
+            <div class="loader"><i class="fa fa-spinner fa-spin"></i></div>
+        </div>
+        <div class="app-container app-theme-white h-1001 mb-3">
+            <!-- Begin:==========: Header :============ -->
+            <div class="app-header header-shadow">
+                <div class="container-fluid fiori-container">
+                    <!-- Begin::Header -->
+                    <div class="app-header__mobile-menu">
+                        <div>
+                            <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="app-header__logo">
+                        <a asp-controller="Home" asp-action="Index" data-toggle="tooltip" data-placement="bottom" title="" class="logo-src" data-original-title="Fiori Admin Template"></a>
+                    </div>
+                    <ul class="horizontal-nav-menu">
+
+                        <li>
+                            <a asp-controller="DataInput" asp-action="Index" class="@((controllername == "datainput") ? "active": "")">
+
+                                <span> Data Input </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="TargetScenariosAndEvaluation" asp-action="TargetScenarios" class="@(controllername == "targetscenariosandevaluation" ? "active": "")">
+                                <span>Target Scenarios And Evaluation</span>
+                            </a>
+                        </li>
+                        <li id="internationalreport">
+                            <a asp-controller="TargetReviewAndValidation" asp-action="TargetSetting" class="@(controllername == "targetreviewandvalidation" ? "active": "")">
+                                <span>Target Review And Validation</span>
+                            </a>
+                        </li>
+                        <li id="internationalreport">
+                            <a asp-controller="InternationalReports" asp-action="Index" class="@(controllername == "internationalreports" ? "active": "")">
+                                <span>International Reports</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <!-- Begin::Right Section -->
+                    <div class="app-header-right">
+                        <div class="header-btn-lg pr-0">
+                            <div class="widget-content p-0">
+                                <div class="widget-content-wrapper">
+                                    <div class="widget-content-left">
+                                        <div class="btn-group">
+                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                                <canvas class="username " id="canvasUserName" width="30" height="30" style="border-radius: 50%; margin-right:3px; vertical-align:middle"></canvas>
+                                                <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                            </a>
+                                            <div tabindex="-1" role="menu" aria-hidden="true" class=" p-0 rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right"
+                                                 x-placement="bottom-end" style="position: absolute;
+                                              will-change: transform; top: 0px; left: 0px; transform: translate3d(59px, 44px, 0px);">
+                                                <div class="dropdown-menu-header">
+                                                    <div class="dropdown-menu-header-inner bg-light">
+                                                        <div class="menu-header-content text-left">
+                                                            <div class="widget-content p-0">
+                                                                <div class="widget-content-wrapper">
+                                                                    <div class="widget-content-left">
+                                                                        <img width="42" class="rounded-circle" src="images/3.jpg" alt="">
+                                                                    </div>
+                                                                    <div class="widget-content-left">
+                                                                        <div class="widget-heading text-dark">
+                                                                          
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="widget-content-right pull-right">
+                                                                        <button onclick="logout()" type="submit" class="btn btn-dark btn-xs ">
+                                                                            Logout
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-header__menu">
+                        <span>
+                            <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                                <span class="btn-icon-wrapper">
+                                    <i class="fa fa-ellipsis-v fa-w-6"></i>
+                                </span>
+                            </button>
+                        </span>
+                    </div>
+                    <!-- End :: Right Section -->
+                    <!-- End::Header -->
+                    <!-- End :: Right Section -->
+                    <!-- End::Header -->
+
+                </div>
+            </div>
+            <!-- End:==========: Header :============ -->
+            <div class="app-main h-100">
+                <div class="app-main__outer h-100">
+                    <div class="app-page-title">
+                        <div class="container-fluid fiori-container">
+                            @*@Html.Partial("_Submenu")*@
+                        </div>
+                    </div>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <div class="row bs-wizard" style="border-bottom:0;">
+
+                                <div class="col bs-wizard-step complete">
+                                    <div class="text-center bs-wizard-stepnum">Step 1</div>
+                                    <div class="progress"><div class="progress-bar"></div></div>
+                                    <a href="#" class="bs-wizard-dot"></a>
+                                    <div class="bs-wizard-info text-center">Select the Matrix and click 'Product Wise Update' button</div>
+                                </div>
+
+                                <div class="col bs-wizard-step complete">
+                                    <!-- complete -->
+                                    <div class="text-center bs-wizard-stepnum">Step 2</div>
+                                    <div class="progress"><div class="progress-bar"></div></div>
+                                    <a href="#" class="bs-wizard-dot"></a>
+                                    <div class="bs-wizard-info text-center">Select the thresholds and then click 'Product Wise Update' button</div>
+                                </div>
+
+                                <div class="col bs-wizard-step active">
+                                    <!-- complete -->
+                                    <div class="text-center bs-wizard-stepnum">Step 3</div>
+                                    <div class="progress"><div class="progress-bar"></div></div>
+                                    <a href="#" class="bs-wizard-dot"></a>
+                                    <div class="bs-wizard-info text-center"> Please validate the selected thresholds with Total Patients</div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-main__inner h-100">
+                        <div class="app-inner-layout app-inner-layout-page h-100">
+                            <div class="container-fluid">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container p-1" style="font-size:12px">
+            &copy; 2020 - @DateTime.Now.Year, Shopping Cart. All Rights Reserved.
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    <environment include="Development,Production">
+
+        <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <script src="~/vendor/bootstrap/js/popper.js"></script>
+        <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        @*<script src="~/vendor/select2/select2.min.js"></script>*@
+        <!-- Bootstrap Select -->
+        <link rel="stylesheet" href="~/css/bootstrap-select.css">
+        <script src="~/js/bootstrap-select.js"></script>
+        <script src="~/js/header.js"></script>
+        <script src="~/js/jquery.dataTables.min.js"></script>
+        <script src="~/js/bootbox.min.js"></script>
+        <script src="~/js/jquery-ui.min.js"></script>
+        <script src="~/js/dataTables.responsive.min.js"></script>
+        <script src="~/js/bootstrap-datepicker.min.js"></script>
+        <link rel="stylesheet" href="~/css/bootstrap-datepicker3.min.css">
+
+
+        <script src="~/ApplicationJS/GlobalAjaxfunctions.js" asp-append-version="true"></script>
+    </environment>
+</body>
+</html>
